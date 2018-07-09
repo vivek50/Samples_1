@@ -1,11 +1,17 @@
 package com.example.speechtotextsample;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.provider.Settings;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -29,6 +35,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        checkPermission();
         initialize();
 
         findViewById(R.id.btnSpeakStart).setOnClickListener(new View.OnClickListener() {
@@ -105,6 +112,17 @@ public class HomeActivity extends AppCompatActivity {
             public void onEvent(int eventType, Bundle params) {
             }
         });
+    }
+
+    private void checkPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!(ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED)) {
+                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                        Uri.parse("package:" + getPackageName()));
+                startActivity(intent);
+                finish();
+            }
+        }
     }
 
     @Override
