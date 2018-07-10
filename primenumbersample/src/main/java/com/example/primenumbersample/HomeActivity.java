@@ -15,7 +15,6 @@ public class HomeActivity extends AppCompatActivity {
 
 
         findViewById(R.id.btnPrime).setOnClickListener(this::CalculatePrime);
-
     }
 
     private void CalculatePrime(View view) {
@@ -37,6 +36,4 @@ public class HomeActivity extends AppCompatActivity {
         }
         ((TextView)findViewById(R.id.txtPrimeNumbers)).setText(primeNumbers.toString());
     }
-
-
 }
